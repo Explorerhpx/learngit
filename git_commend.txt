@@ -1,0 +1,84 @@
+git add
+git commit -m ""
+
+git log
+git reflog //look up every previous order
+
+
+
+# git reset
+git reset --hard // 清空 stage 和 工作区
+git reset [没有参数] // 清空 stage, 保留工作区, 把工作区与版本库的不同放入stage
+git reset --soft // 保留stage,保留工作区
+
+git reset --hard HEAD^ // 在同一个分支移动到不同的版本库
+git reset --hard HEAD~10
+git reset --hard 2e7c
+
+git reset HEAD readme.txt // 清空暂存区（stage），保留工作区
+
+
+
+
+git diff HEAD -- readme.txt // 查看工作区和版本库里面最新版本的区别
+
+git checkout -- readme.txt // 让这个文件回到最近一次git commit或git add时的状态
+// git checkout其实是用版本库里的版本替换工作区的版本
+
+git rm test.txt // 确定删掉某个文件
+
+
+======
+使用https协议
+git remote add origin https://github.com/Explorerhpx/learngit.git // 关联到远程库，origin 就是远程库的名字
+或使用SSH协议
+git remote add origin git@github.com:Explorerhpx/learngit.git
+
+
+git push -u origin master // 第一次push, 本地 master 推送到 origin 的 master。同时把本地的master分支和远程的master分支关联起来
+git push origin master // 之后的push
+
+
+git checkout -b dev origin/dev // 在clone后新建dev分支，并创建远程origin的dev到本地
+(感觉第一次在远程库使用时，也在origin建立了dev）
+
+git branch --set-upstream-to=origin/dev dev // 本地已有dev的前提下，本地dev与origin/dev关联
+
+#git push 的一般步骤:
+git branch --set-upstream-to=origin/dev dev
+git push origin dev
+git pull
+修复
+git add
+git commit -m
+git push origin dev
+======
+
+git branch dev // 创建dev branch （创建新指针）
+git branch -d dev // 删除分支
+
+git checkout dev // 转移到 dev
+git checkout -b dev // 创建并转移
+
+git branch // 查看当前在哪个分支
+
+
+
+git merge dev // 合并 dev branch 到现在branch（两个指针指向一起）
+有冲突的话修改冲突，然后git add, git commit
+(还是不太懂冲突fix的策略，因为在完成合并后，虽然git status会显示已经
+合并完成，但是查看文件似乎只有master 会改变，dev里的冲突部分并没有改变。可能是因为
+在master上执行merge只改变master，而且合并后dev大概率是会被删掉？)
+
+
+git merge 默认使用 Fast forward // 在删除分支后会丢掉分支信息
+如果不使用fast forward策略：
+git merge --no-ff -m "merge with no-ff" dev // 在合并时生成一个新的commit,所以要加 -m ""
+// 就相当于原来是直接把master的指针移到dev那里，现在master先建了一个新指针，然后和dev合并并移到那里
+（好像也不是太明白其实）
+
+git log --graph // 可以以graph的形式显示冲突合并过程
+
+
+备注：
+新版git 使用 git switch dev 切换到新的dev; 使用 git switch -c dev 创建和切换到dev
