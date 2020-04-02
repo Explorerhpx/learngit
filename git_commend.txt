@@ -38,14 +38,14 @@ git remote add origin git@github.com:Explorerhpx/learngit.git
 git push -u origin master // 第一次push, 本地 master 推送到 origin 的 master。同时把本地的master分支和远程的master分支关联起来
 git push origin master // 之后的push
 
+git push -u origin dev // origin还没有dev时,在dev下执行,在origin创建dev，并把本地dev推到origin
 
-git checkout -b dev origin/dev // 在clone后新建dev分支，并创建远程origin的dev到本地
-(感觉第一次在远程库使用时，也在origin建立了dev）
+git checkout -b dev origin/dev
+// 在origin已有dev时，在clone后新建dev分支，并创建远程origin的dev到本地
 
-git branch --set-upstream-to=origin/dev dev // 本地已有dev的前提下，本地dev与origin/dev关联
+git branch --set-upstream-to=origin/dev dev // 本地和origin均有dev的前提下，本地dev与origin/dev关联
 
 #git push 的一般步骤:
-git branch --set-upstream-to=origin/dev dev
 git push origin dev
 git pull
 修复
